@@ -5,7 +5,7 @@ instagram clone client with nomadcoder
 
 ## Start
 
-- [ ] Router
-- [ ] Authentication
-- [ ] Arch.
-- [ ] Styles
+- [X] Router
+- [X] Authentication
+- [X] Arch.
+- [X] Styles
