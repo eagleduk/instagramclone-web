@@ -9,3 +9,12 @@ instagram clone client with nomadcoder
 - [X] Authentication
 - [X] Arch.
 - [X] Styles
+
+## Authentication
+
+- [ ] Log In / Sign Up
+
+## 
+- [ ] Feed
+- [ ] Profile
+- [ ] See Hashtag

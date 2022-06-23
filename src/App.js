@@ -6,6 +6,7 @@ import Login from "./screens/Login";
 import { isDarkModeVar, isLoginVar } from "./variables";
 import { useReactiveVar } from "@apollo/client/react";
 import { darkTheme, GlobalStyle, lightTheme } from "./style";
+import SignUp from "./screens/SignUp";
 
 function App() {
   const isLogin = useReactiveVar(isLoginVar);
@@ -16,7 +17,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/">
-            <Route path="" element={isLogin ? <Home /> : <Login />} />
+            <Route path="" element={<Home />} />
+            <Route path="signup" element={<SignUp />} />
           </Route>
           <Route path="*" element={<E404 />} />
         </Routes>
