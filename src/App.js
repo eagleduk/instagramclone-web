@@ -7,23 +7,26 @@ import { isDarkModeVar, isLoginVar } from "./variables";
 import { useReactiveVar } from "@apollo/client/react";
 import { darkTheme, GlobalStyle, lightTheme } from "./style";
 import SignUp from "./screens/SignUp";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const isLogin = useReactiveVar(isLoginVar);
   const isDarkMode = useReactiveVar(isDarkModeVar);
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <Router>
-        <Routes>
-          <Route path="/">
-            <Route path="" element={<Home />} />
-            <Route path="signup" element={<SignUp />} />
-          </Route>
-          <Route path="*" element={<E404 />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router>
+          <Routes>
+            <Route path="/">
+              <Route path="" element={<Home />} />
+              <Route path="signup" element={<SignUp />} />
+            </Route>
+            <Route path="*" element={<E404 />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
