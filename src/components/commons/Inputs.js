@@ -22,4 +22,5 @@ export const Submit = styled.input`
   height: 30px;
   border-radius: 5px;
   font-size: 14px;
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 `;

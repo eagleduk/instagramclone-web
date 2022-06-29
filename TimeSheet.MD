@@ -1,3 +1,44 @@
+=============================   2022-06-29  ==============================
+
+1. Apollo client devtools
+   
+   - 현재는 정상 동작을 하지 않는 듯.
+   - 그래도 apollo client 는 정상 동작을 한다.
+   - mutation, query 는 backend 서버를 보며 확인해야 할듯
+   - Apollo client 를 사용하기 위해 ApolloProvider 로 React Component 를 감싸주어야 한다.
+
+1. React Hook Form
+
+    - 버전 6 에서는 register 값을 React Component 의 ref 값에 할당을 했다면, 버전 7 에서는 register 값을 React Component 에 attribute 로 할당을 해야 한다.
+    ```javascript
+        function App() {
+            const { register } = useForm();
+
+            return <div>
+                { /* version 6  */}
+                <input ref={register} name="version6" />
+
+                { /* version 7 */ }
+                <input {...register("version7")}>
+            </div>
+        }
+    ```
+    - useForm 의 watch 값을 이용하여 실시간 값의 변화를 감지 할 수있다.
+    ```javascript
+        function App() {
+            const { register, watch } = useForm();
+
+            console.log(watch("name"));
+            console.log(watch(["name","id"]));
+
+            return <div>
+                <input {...register("name")}>
+                <input {...register("id")}>
+            </div>
+        }
+    ```
+
+
 =============================   2022-06-22  ==============================
 
 1. Router
@@ -24,7 +65,7 @@
             }
         ```
 
-1. Reactive variables
+2. Reactive variables
 
     - apollo client 기능
     - Global 변수를 사용할 수 있도록 도와줌
@@ -49,12 +90,12 @@
         }
     ```
 
-1. styled-components
+3. styled-components
 
     - react 에서 css 가 적용된 Component 를 쉽게 만들 수 있게 해주는 패키지
     - ThemeProvider 를 이용하여 react App 전체에 쉽게 스타일을 변경할 수 있다.
 
-1. reset css
+4. reset css
 
     - npm i styled-reset
     - styled-components 의 globalstyle 과 혼합하여 reset css 적용
