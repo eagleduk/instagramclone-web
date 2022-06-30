@@ -1,3 +1,58 @@
+=============================   2022-06-30  ==============================
+
+1. React router dom
+
+    - useNavigate hook 을 이용하여 페이지 전환 가능.
+    - 또한 state 를 사용하여 데이터 전달 가능.
+    ```javascript
+        function App() {
+            const navigate = useNavigate();
+            return <div>
+                <button onClick={() => {
+                    navigate("/", {
+                        state: {
+                            data1: "data1",
+                            data2: "data2"
+                        }
+                    })
+                }}>
+            </div>
+        }
+    ```
+
+1. Apollo client
+
+    - Apollo server 의 API 를 이용하기 위해서는 각 상황에 맞는 Hook 을 사용 해야 하는듯.
+    - Mutation 을 실행 할 때에는 useMutation, Query 를 실행 할 때에는 useQuery 를 사용.
+    - Hook 내에서 onComplete, onError 등 다양한 상황에 맞는 데이터 및 함수를 사용할 수 있고,
+    - Hook 의 리턴값을 이용하여 onComplete, onError 등 사용이 가능하다.
+    ```javascript
+        const Mutation = gql``;
+
+        function App() {
+            const [onMutation] = useMutation(Mutation, {
+                onComplete: (data) => {
+                    // 정상 종료시
+                },
+                onError: (error) => {
+                    // 에러 발생시
+                }
+            });
+
+            onMutation({
+                variables: {
+                    // Mutation 의 Parameter
+                },
+                onComplete: (data) => {
+                    // 정상 종료시
+                },
+                onError: (error) => {
+                    // 에러 발생시
+                }
+            })
+        }
+    ```
+
 =============================   2022-06-29  ==============================
 
 1. Apollo client devtools
@@ -7,7 +62,7 @@
    - mutation, query 는 backend 서버를 보며 확인해야 할듯
    - Apollo client 를 사용하기 위해 ApolloProvider 로 React Component 를 감싸주어야 한다.
 
-1. React Hook Form
+2. React Hook Form
 
     - 버전 6 에서는 register 값을 React Component 의 ref 값에 할당을 했다면, 버전 7 에서는 register 값을 React Component 에 attribute 로 할당을 해야 한다.
     ```javascript

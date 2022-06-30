@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import { MainBox, SubBox } from "../components/commons/AuthBoxs";
 import AuthTitle from "../components/commons/AuthTitle";
 import BodyContainer from "../components/commons/BodyContainer";
@@ -37,7 +39,54 @@ const FacebookLogin = styled.div`
 `;
 */
 
+const CREATEUSER = gql`
+  mutation CreateUser(
+    $firstname: String!
+    $username: String!
+    $password: String!
+    $email: String!
+  ) {
+    createUser(
+      firstname: $firstname
+      username: $username
+      password: $password
+      email: $email
+    ) {
+      id
+    }
+  }
+`;
+
 function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+  const navigator = useNavigate();
+  const [CREATEUSER_FN] = useMutation(CREATEUSER);
+  const onCompleteCreateUser = (data) => {
+    navigator("/", { replace: true, state: "Created." });
+  };
+
+  const onErrorCreateUser = (data) => {
+    console.log(data);
+  };
+
+  const onSubmit = (values) => {
+    CREATEUSER_FN({
+      variables: values,
+      onCompleted: onCompleteCreateUser,
+      onError: onErrorCreateUser,
+    });
+  };
+  const canSubmit =
+    watch("username")?.length > 0 && watch("password")?.length > 5;
+
   return (
     <BodyContainer>
       <HelmetTitle title="Sign up | Instagram clone"></HelmetTitle>
@@ -53,12 +102,32 @@ function SignUp() {
         <Saperator text={"또는"} /> 
         */}
 
-        <Form>
-          <Input type="text" placeholder="이메일 주소" />
-          <Input type="text" placeholder="이름" />
-          <Input type="text" placeholder="사용자 이름" />
-          <Input type="text" placeholder="비밀번호" />
-          <Submit type="submit" value="가입" />
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            {...register("email", {})}
+            type="text"
+            placeholder="이메일 주소"
+          />
+          <Input
+            {...register("firstname", {})}
+            type="text"
+            placeholder="이름"
+          />
+          <Input
+            {...register("username", {})}
+            type="text"
+            placeholder="사용자 이름"
+          />
+          <Input
+            {...register("password", {})}
+            type="text"
+            placeholder="비밀번호"
+          />
+          <Submit
+            type="submit"
+            value="가입"
+            disabled={canSubmit ? false : true}
+          />
         </Form>
       </MainBox>
 

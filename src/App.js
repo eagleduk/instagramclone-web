@@ -2,15 +2,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import E404 from "./screens/E404";
 import Home from "./screens/Home";
-import { isDarkModeVar } from "./ApolloClient";
+import { isDarkModeVar, isLoginVar } from "./ApolloClient";
 import { ApolloProvider, useReactiveVar } from "@apollo/client/react";
 import { darkTheme, GlobalStyle, lightTheme } from "./style";
 import SignUp from "./screens/SignUp";
 import { HelmetProvider } from "react-helmet-async";
 import { ApolloClientConnector } from "./ApolloClient";
+import Login from "./screens/Login";
 
-console.log("EEEEE", ApolloClientConnector);
 function App() {
+  const isLogin = useReactiveVar(isLoginVar);
   const isDarkMode = useReactiveVar(isDarkModeVar);
   return (
     <ApolloProvider client={ApolloClientConnector}>
@@ -20,7 +21,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/">
-                <Route path="" element={<Home />} />
+                <Route path="" element={isLogin ? <Home /> : <Login />} />
                 <Route path="signup" element={<SignUp />} />
               </Route>
               <Route path="*" element={<E404 />} />

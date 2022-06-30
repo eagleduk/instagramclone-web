@@ -1,6 +1,6 @@
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../routes";
 import AuthTitle from "../components/commons/AuthTitle";
@@ -12,6 +12,9 @@ import { MainBox, SubBox } from "../components/commons/AuthBoxs";
 import HelmetTitle from "../components/commons/HelmetTitle";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
+import { LoginUser } from "../ApolloClient";
+import ErrorMessage from "../components/commons/ErrorMessage";
+import ThemeChange from "../components/commons/ThemeChange";
 
 const FacebookLogin = styled.div`
   width: 100%;
@@ -44,14 +47,38 @@ const LOGIN = gql`
 `;
 
 function Login() {
-  const [LOGIN_FN, { data, loading, error }] = useMutation(LOGIN);
+  const { state } = useLocation();
+  console.log(state);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+  const navigator = useNavigate();
+  const [LOGIN_FN] = useMutation(LOGIN);
 
-  console.log("data", data, "loading", loading, "error", error);
+  const onCompletedLogin = (data) => {
+    const {
+      login: { message, result, token },
+    } = data;
+    if (result) {
+      // token 저장
+      LoginUser(token);
+      navigator("/", { replace: true });
+    } else {
+      // error message display
+      setError("login", { message });
+    }
+  };
 
-  const { register, handleSubmit, watch } = useForm({ mode: "onChange" });
-  const onSubmit = (data) => {
+  const onSubmit = (values) => {
     LOGIN_FN({
-      variables: data,
+      variables: values,
+      onCompleted: onCompletedLogin,
     });
   };
 
@@ -60,6 +87,7 @@ function Login() {
 
   return (
     <BodyContainer>
+      <ThemeChange></ThemeChange>
       <HelmetTitle title="Log in | Instagram clone" />
 
       <MainBox>
@@ -73,7 +101,7 @@ function Login() {
           />
           <Input
             {...register("password", {})}
-            type="text"
+            type="password"
             placeholder="비밀번호"
           />
           <Submit
@@ -89,6 +117,8 @@ function Login() {
           <FontAwesomeIcon icon={faFacebookSquare} />
           <span>Facebook으로 로그인</span>
         </FacebookLogin>
+
+        <ErrorMessage message={errors?.login?.message} />
       </MainBox>
 
       <SubBox>

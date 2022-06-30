@@ -21,16 +21,16 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const lightTheme = {
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "rgba(250, 250, 250, 1)",
   color: "rgba(0,55,107,1)",
-  borderColor: "rgb(219, 219, 219)",
-  containerColor: "rgb(255, 255, 255)",
+  borderColor: "rgba(219, 219, 219,1)",
+  containerColor: "rgba(255, 255, 255,1)",
   normalLinkColor: "rgba(0,149,246,1)",
 };
 export const darkTheme = {
-  backgroundColor: "#FAFAFA",
-  color: "rgba(0,55,107,1)",
-  borderColor: "rgb(219, 219, 219)",
-  containerColor: "rgb(255, 255, 255)",
+  color: "rgba(250, 250, 250, 1)",
+  backgroundColor: "rgba(0,55,107,1)",
+  borderColor: "rgba(219, 219, 219,1)",
+  containerColor: "rgba(255, 255, 255,1)",
   normalLinkColor: "rgba(0,149,246,1)",
 };

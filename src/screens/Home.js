@@ -1,10 +1,22 @@
-import { useReactiveVar } from "@apollo/client";
-import { isLoginVar } from "../ApolloClient";
-import Login from "./Login";
+import {} from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { LogoutUser } from "../ApolloClient";
 
 function Home() {
-  const isLogin = useReactiveVar(isLoginVar);
-  return <>{isLogin ? null : <Login />}</>;
+  const navigator = useNavigate();
+  return (
+    <div>
+      Welcome!!
+      <button
+        onClick={() => {
+          LogoutUser();
+          navigator("/");
+        }}
+      >
+        Logout
+      </button>
+    </div>
+  );
 }
 
 export default Home;

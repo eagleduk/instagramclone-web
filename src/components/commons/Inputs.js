@@ -23,4 +23,5 @@ export const Submit = styled.input`
   border-radius: 5px;
   font-size: 14px;
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  cursor: ${(props) => (props.disabled ? "auto" : "pointer")}; ;
 `;
