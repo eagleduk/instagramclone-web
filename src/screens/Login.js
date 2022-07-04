@@ -48,7 +48,6 @@ const LOGIN = gql`
 
 function Login() {
   const { state } = useLocation();
-  console.log(state);
   const {
     register,
     handleSubmit,

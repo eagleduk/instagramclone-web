@@ -11,7 +11,6 @@ const Message = styled.span`
 `;
 
 function ErrorMessage({ message }) {
-  console.log(message);
   return <Error>{message ? <Message>{message}</Message> : null}</Error>;
 }
 

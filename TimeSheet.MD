@@ -1,3 +1,48 @@
+=============================   2022-07-04  ==============================
+
+1. Apollo Client Headers
+
+    - 기존 Apollo Client 객체에는 headers 가 포함되어 있지 않다.
+    ```javascript
+        export const ApolloClientConnector = new ApolloClient({
+            uri: "http://localhost:4000/graphql",
+            cache: new InMemoryCache(),
+        });
+    ```
+    - cookie 를 사용한 방식이면 API 를 호출할 때 자동으로 cookie 가 포함되어 있지만, Header 방식은 header 에 보내고 싶은 데이터를 포함하여야 한다.  
+        [Authentication-Header](https://www.apollographql.com/docs/react/networking/authentication/#header)
+    ```javascript
+        const httpLink = createHttpLink({
+            uri: "http://localhost:4000/graphql",
+        });
+
+        const authLink = setContext((_, { headers }) => {
+        // get the authentication token from local storage if it exists
+        const token = localStorage.getItem(TOKEN_KEY);
+        // return the headers to the context so httpLink can read them
+            return {
+                headers: {
+                ...headers,
+                token,
+                },
+            };
+        });
+
+        export const ApolloClientConnector = new ApolloClient({
+            link: authLink.concat(httpLink),
+            cache: new InMemoryCache(),
+        });
+    ```
+
+1. `버그 처리 필요`
+   1. token 을 강제 수정했을 때, 500에러
+
+        - token 을 강제 수정 하고, Apollo client 수행시 500에러 headers token 을 넣었는데 에러가 발생
+  
+   2. token 및 getTokenUser 시 logout 로직을 수행하는 버그 처리
+
+        - useToken 함수를 수행할 때, token 이 정상일 때에도 결과값이 undefined 가 먼저 출력되는 현상 발생.
+
 =============================   2022-06-30  ==============================
 
 1. React router dom
@@ -20,7 +65,7 @@
         }
     ```
 
-1. Apollo client
+2. Apollo client
 
     - Apollo server 의 API 를 이용하기 위해서는 각 상황에 맞는 Hook 을 사용 해야 하는듯.
     - Mutation 을 실행 할 때에는 useMutation, Query 를 실행 할 때에는 useQuery 를 사용.
