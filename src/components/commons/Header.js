@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AuthTitle from "./AuthTitle";
+import Logo from "./AuthTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "./Avatar";
@@ -55,7 +55,7 @@ function Header() {
     <StyledHeader>
       <StyledContainer>
         <StyledHeaderColumn>
-          <AuthTitle fontSize="30px" />
+          <Logo fontSize="30px" />
         </StyledHeaderColumn>
         <StyledHeaderColumn>
           {tokenUser?.getTokenUser ? (

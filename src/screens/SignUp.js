@@ -2,7 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { MainBox, SubBox } from "../components/commons/AuthBoxs";
-import AuthTitle from "../components/commons/AuthTitle";
+import Logo from "../components/commons/AuthTitle";
 import BodyContainer from "../components/commons/BodyContainer";
 import { Form } from "../components/commons/Forms";
 import HelmetTitle from "../components/commons/HelmetTitle";
@@ -89,9 +89,9 @@ function SignUp() {
 
   return (
     <BodyContainer>
-      <HelmetTitle title="Sign up | Instagram clone"></HelmetTitle>
+      <HelmetTitle title="Sign up | Dukstagram"></HelmetTitle>
       <MainBox>
-        <AuthTitle />
+        <Logo />
 
         {/* 
         <FacebookLogin>

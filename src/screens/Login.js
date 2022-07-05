@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../routes";
-import AuthTitle from "../components/commons/AuthTitle";
+import Logo from "../components/commons/AuthTitle";
 import BodyContainer from "../components/commons/BodyContainer";
 import Saperator from "../components/commons/Saperator";
 import { Input, Submit } from "../components/commons/Inputs";
@@ -87,10 +87,10 @@ function Login() {
   return (
     <BodyContainer>
       <ThemeChange></ThemeChange>
-      <HelmetTitle title="Log in | Instagram clone" />
+      <HelmetTitle title="Log in | Dukstagram" />
 
       <MainBox>
-        <AuthTitle />
+        <Logo />
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input

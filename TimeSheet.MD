@@ -1,6 +1,15 @@
+=============================   2022-07-05  ==============================
+
+1. Home 화면 작업
+
+1. [Apollo Client Fragments](https://www.apollographql.com/docs/react/data/fragments/)
+
+    - Apollo client 에서 query 를 수행하고 cache 에 저장된 결과를 읽거나 쓸수 있는 기능.  
+
+
 =============================   2022-07-04  ==============================
 
-1. Apollo Client Headers
+1. [Apollo Client Headers](https://www.apollographql.com/docs/react/networking/authentication/#header)
 
     - 기존 Apollo Client 객체에는 headers 가 포함되어 있지 않다.
     ```javascript
@@ -10,7 +19,6 @@
         });
     ```
     - cookie 를 사용한 방식이면 API 를 호출할 때 자동으로 cookie 가 포함되어 있지만, Header 방식은 header 에 보내고 싶은 데이터를 포함하여야 한다.  
-        [Authentication-Header](https://www.apollographql.com/docs/react/networking/authentication/#header)
     ```javascript
         const httpLink = createHttpLink({
             uri: "http://localhost:4000/graphql",
@@ -34,7 +42,7 @@
         });
     ```
 
-1. `버그 처리 필요`
+2. `버그 처리`
    1. token 을 강제 수정했을 때, 500에러
 
         - token 을 강제 수정 하고, Apollo client 수행시 500에러 headers token 을 넣었는데 에러가 발생
