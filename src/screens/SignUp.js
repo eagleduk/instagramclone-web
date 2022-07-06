@@ -58,13 +58,7 @@ const CREATEUSER = gql`
 `;
 
 function SignUp() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setError,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     mode: "onChange",
   });
   const navigator = useNavigate();

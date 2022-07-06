@@ -1,8 +1,14 @@
+=============================   2022-07-06  ==============================
+
+1. Home / Feed 화면 분할
+2. [Apollo Client Cache Read/Write](https://www.apollographql.com/docs/react/caching/cache-interaction/)
+3. backend 에서 로그인 유저가 feed에 대한 like 여부 리턴 값이 없음.
+
 =============================   2022-07-05  ==============================
 
 1. Home 화면 작업
 
-1. [Apollo Client Fragments](https://www.apollographql.com/docs/react/data/fragments/)
+2. [Apollo Client Fragments](https://www.apollographql.com/docs/react/data/fragments/)
 
     - Apollo client 에서 query 를 수행하고 cache 에 저장된 결과를 읽거나 쓸수 있는 기능.  
 

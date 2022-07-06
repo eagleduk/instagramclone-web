@@ -4,11 +4,11 @@ import { reset } from "styled-reset";
 export const GlobalStyle = createGlobalStyle`
     ${reset}
     * {
-        color: ${(props) => props.theme.color};
         border-color: ${(props) => props.theme.borderColor};
         box-sizing: border-box;
     }
     body {
+        color: ${(props) => props.theme.color};
         background-color: ${(props) => props.theme.backgroundColor};
         font-family: 'Open Sans', sans-serif;
     }

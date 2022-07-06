@@ -10,7 +10,7 @@ import routes from "../../routes";
 
 const StyledHeader = styled.header`
   height: 60px;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: ${(props) => props.theme.borderColor};
   display: flex;

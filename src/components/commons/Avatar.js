@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledAvatar = styled.div`
-  width: 25px;
-  height: 25px;
+  width: ${(props) => `${props.scale * 25}px`};
+  height: ${(props) => `${props.scale * 25}px`};
   img {
     width: 100%;
     height: 100%;
@@ -10,9 +10,9 @@ const StyledAvatar = styled.div`
   }
 `;
 
-function Avatar({ url = "" }) {
+function Avatar({ url = "", scale = 1 }) {
   return (
-    <StyledAvatar>
+    <StyledAvatar scale={scale}>
       <img src={url} alt="" />
     </StyledAvatar>
   );
