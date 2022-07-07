@@ -2,15 +2,25 @@ import styled from "styled-components";
 import Avatar from "../components/commons/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHeart,
+  faHeart as faHeartUnLike,
   faMessage,
   faPaperPlane,
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartLike } from "@fortawesome/free-solid-svg-icons";
 import { AccentLabel } from "../components/commons/Labels";
 import PropTypes from "prop-types";
 import { ApolloClientConnector } from "../ApolloClient";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+
+const TOGGLE_LIKE = gql`
+  mutation ToggleLike($id: Int!) {
+    toggleLike(id: $id) {
+      message
+      result
+    }
+  }
+`;
 
 const FeedContainer = styled.div`
   max-width: 470px;
@@ -58,7 +68,9 @@ const IconRow = styled(FooterRow)`
   }
   svg {
     font-size: 24px;
-    color: rgba(38, 38, 38, 1);
+    color: ${(props) => {
+      return props.isLike ? "red" : "rgba(38, 38, 38, 1)";
+    }};
   }
   span:hover {
     svg {
@@ -69,20 +81,48 @@ const IconRow = styled(FooterRow)`
 
 const LikeRow = styled(FooterRow)``;
 
-function Feed({ id, createdAt, caption, file, user, isOwner, like, comments }) {
-  const onLikeClick = (e) => {
-    console.log("likes");
-  };
-  const photo = ApolloClientConnector.readFragment({
+function Feed({
+  id,
+  createdAt,
+  caption,
+  file,
+  user,
+  isOwner,
+  comments,
+  like,
+  isLike,
+}) {
+  const fragmentVar = {
     id: `Photo:${id}`,
     fragment: gql`
       fragment viewPhoto on Photo {
         like
-        id
+        isLike
       }
     `,
-  });
-  console.log("eee", photo);
+  };
+
+  const { like: cacheLike, isLike: cacheIsLike } =
+    ApolloClientConnector.readFragment(fragmentVar);
+
+  const [TOGGLE_LIKE_FN] = useMutation(TOGGLE_LIKE);
+  const onToggleLike = (e) => {
+    TOGGLE_LIKE_FN({
+      variables: {
+        id,
+      },
+      onCompleted: (data) => {
+        ApolloClientConnector.writeFragment({
+          ...fragmentVar,
+          data: {
+            isLike: !cacheLike,
+            like: cacheLike ? cacheIsLike - 1 : cacheIsLike + 1,
+          },
+        });
+      },
+    });
+  };
+
   return (
     <FeedContainer>
       <FeedHeader>
@@ -95,8 +135,11 @@ function Feed({ id, createdAt, caption, file, user, isOwner, like, comments }) {
       <FeedFooter>
         <IconRow>
           <div>
-            <span onClick={onLikeClick}>
-              <FontAwesomeIcon icon={faHeart} />
+            <span onClick={onToggleLike}>
+              <FontAwesomeIcon
+                icon={isLike ? faHeartLike : faHeartUnLike}
+                style={{ color: isLike ? "tomato" : "inherit" }}
+              />
             </span>
             <span>
               <FontAwesomeIcon icon={faMessage} />
@@ -133,8 +176,9 @@ Feed.propTypes = {
     avator: PropTypes.string.isRequired,
   }),
   isOwner: PropTypes.bool.isRequired,
-  like: PropTypes.number.isRequired,
   comments: PropTypes.number.isRequired,
+  like: PropTypes.number.isRequired,
+  isLike: PropTypes.bool.isRequired,
 };
 
 export default Feed;

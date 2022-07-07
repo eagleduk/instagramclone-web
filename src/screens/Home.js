@@ -18,6 +18,7 @@ const FEEDSQUERY = gql`
       isOwner
       like
       comments
+      isLike
     }
   }
 `;
