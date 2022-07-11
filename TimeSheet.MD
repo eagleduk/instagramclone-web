@@ -1,3 +1,11 @@
+=============================   2022-07-11  ==============================
+
+1. feed comment 작업
+2. Apollo Cache modify
+
+    - fragment 를 사용하지 않고 [modify(수정)](https://www.apollographql.com/docs/react/caching/cache-interaction#using-cachemodify), [evict(삭제)](https://www.apollographql.com/docs/react/caching/garbage-collection#cacheevict) 가 가능하다.
+
+
 =============================   2022-07-07  ==============================
 
 1. backend 에서 로그인 유저에 대한 feed like / unlike 추가

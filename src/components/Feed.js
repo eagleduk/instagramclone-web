@@ -12,6 +12,8 @@ import { AccentLabel } from "../components/commons/Labels";
 import PropTypes from "prop-types";
 import { ApolloClientConnector } from "../ApolloClient";
 import { gql, useMutation } from "@apollo/client";
+import Caption from "./Caption";
+import Comments from "./Comments";
 
 const TOGGLE_LIKE = gql`
   mutation ToggleLike($id: Int!) {
@@ -51,7 +53,8 @@ const FeedFooter = styled.div`
 const FooterRow = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 05px;
+  align-items: center;
 `;
 
 const IconRow = styled(FooterRow)`
@@ -79,7 +82,9 @@ const IconRow = styled(FooterRow)`
   }
 `;
 
-const LikeRow = styled(FooterRow)``;
+const LikeRow = styled(FooterRow)`
+  margin: 5px 0px 15px 5px;
+`;
 
 function Feed({
   id,
@@ -160,6 +165,9 @@ function Feed({
             <AccentLabel>{like === 1 ? "1 like" : `${like} likes`}</AccentLabel>
           </LikeRow>
         )}
+        <Caption url={user.avator} name={user.username} caption={caption} />
+
+        <Comments />
       </FeedFooter>
     </FeedContainer>
   );
