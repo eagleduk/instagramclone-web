@@ -1,7 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 import styled from "styled-components";
-import { isDarkModeVar, setDarkMode, setLightMode } from "../../ApolloClient";
+import { isDarkModeVar, setDarkMode, setLightMode } from "../../Apollo/client";
 
 const Container = styled.div``;
 

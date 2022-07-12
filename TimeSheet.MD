@@ -1,3 +1,21 @@
+=============================   2022-07-12  ==============================
+
+1. 폴더 구조 변경
+    - apollo client, mutation, query, fragment 를 하나의 폴더에 작성
+
+2. comment 작업
+
+    - commentView, commentInput 을 가지고 있는 comments Component 생성
+    - commentRow 를 가지고 있는 comment Component 생성
+    - comment create 로직 추가
+
+3. backend comment 에 user 정보 추가
+4. backend feed 에 comment 갯수가 아닌 comment 배열로 변경
+
+5. TODO
+   1. hashtag link 
+   2. comment 추가 / 삭제 로직
+
 =============================   2022-07-11  ==============================
 
 1. feed comment 작업

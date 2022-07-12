@@ -8,21 +8,14 @@ import {
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartLike } from "@fortawesome/free-solid-svg-icons";
-import { AccentLabel } from "../components/commons/Labels";
+import { AccentLabel, UsernameLabel } from "../components/commons/Labels";
 import PropTypes from "prop-types";
-import { ApolloClientConnector } from "../ApolloClient";
-import { gql, useMutation } from "@apollo/client";
+import { ApolloClientConnector } from "../Apollo/client";
+import { useMutation } from "@apollo/client";
 import Caption from "./Caption";
 import Comments from "./Comments";
-
-const TOGGLE_LIKE = gql`
-  mutation ToggleLike($id: Int!) {
-    toggleLike(id: $id) {
-      message
-      result
-    }
-  }
-`;
+import { TOGGLE_LIKE } from "../Apollo/mutations";
+import { viewPhotoFragment } from "../Apollo/fragments";
 
 const FeedContainer = styled.div`
   max-width: 470px;
@@ -99,12 +92,7 @@ function Feed({
 }) {
   const fragmentVar = {
     id: `Photo:${id}`,
-    fragment: gql`
-      fragment viewPhoto on Photo {
-        like
-        isLike
-      }
-    `,
+    fragment: viewPhotoFragment,
   };
 
   const { like: cacheLike, isLike: cacheIsLike } =
@@ -132,7 +120,7 @@ function Feed({
     <FeedContainer>
       <FeedHeader>
         <Avatar url={user.avator} scale={1.3} />
-        <AccentLabel>{user.username}</AccentLabel>
+        <UsernameLabel>{user.username}</UsernameLabel>
       </FeedHeader>
       <FeedContent>
         <img src={file} alt={caption} />
@@ -165,9 +153,10 @@ function Feed({
             <AccentLabel>{like === 1 ? "1 like" : `${like} likes`}</AccentLabel>
           </LikeRow>
         )}
+
         <Caption url={user.avator} name={user.username} caption={caption} />
 
-        <Comments />
+        <Comments feedID={id} comments={comments} />
       </FeedFooter>
     </FeedContainer>
   );
@@ -184,7 +173,19 @@ Feed.propTypes = {
     avator: PropTypes.string.isRequired,
   }),
   isOwner: PropTypes.bool.isRequired,
-  comments: PropTypes.number.isRequired,
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      userId: PropTypes.number.isRequired,
+      photoId: PropTypes.number.isRequired,
+      user: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        avator: PropTypes.string.isRequired,
+      }),
+    })
+  ),
   like: PropTypes.number.isRequired,
   isLike: PropTypes.bool.isRequired,
 };

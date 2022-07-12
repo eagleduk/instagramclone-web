@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import Avatar from "./commons/Avatar";
-import { AccentLabel, DefaultLabel } from "./commons/Labels";
+import { DefaultLabel, UsernameLabel } from "./commons/Labels";
 import PropTypes from "prop-types";
 
 const FooterRow = styled.div`
@@ -16,11 +15,12 @@ const CaptionRow = styled(FooterRow)`
   gap: 5px;
 `;
 
+const REGEXR = /(#[\w]+)|([\w]+)/g;
+
 function Caption({ url, name, caption }) {
   return (
     <CaptionRow>
-      <Avatar url={url} scale={0.8} />
-      <AccentLabel>{name}</AccentLabel>
+      <UsernameLabel>{name}</UsernameLabel>
       <DefaultLabel>{caption}</DefaultLabel>
     </CaptionRow>
   );

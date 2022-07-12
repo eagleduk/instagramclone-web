@@ -5,7 +5,7 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "./Avatar";
 import useToken from "../../hooks/useToken";
 import { Link } from "react-router-dom";
-import { LogoutUser } from "../../ApolloClient";
+import { LogoutUser } from "../../Apollo/client";
 import routes from "../../routes";
 
 const StyledHeader = styled.header`

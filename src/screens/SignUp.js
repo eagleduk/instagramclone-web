@@ -1,6 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { CREATEUSER } from "../Apollo/mutations";
 import { MainBox, SubBox } from "../components/commons/AuthBoxs";
 import Logo from "../components/commons/AuthTitle";
 import BodyContainer from "../components/commons/BodyContainer";
@@ -38,24 +39,6 @@ const FacebookLogin = styled.div`
   }
 `;
 */
-
-const CREATEUSER = gql`
-  mutation CreateUser(
-    $firstname: String!
-    $username: String!
-    $password: String!
-    $email: String!
-  ) {
-    createUser(
-      firstname: $firstname
-      username: $username
-      password: $password
-      email: $email
-    ) {
-      id
-    }
-  }
-`;
 
 function SignUp() {
   const { register, handleSubmit, watch } = useForm({

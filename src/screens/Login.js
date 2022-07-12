@@ -1,6 +1,6 @@
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../routes";
 import Logo from "../components/commons/AuthTitle";
@@ -11,10 +11,11 @@ import { Form } from "../components/commons/Forms";
 import { MainBox, SubBox } from "../components/commons/AuthBoxs";
 import HelmetTitle from "../components/commons/HelmetTitle";
 import { useForm } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
-import { LoginUser } from "../ApolloClient";
+import { useMutation } from "@apollo/client";
+import { LoginUser } from "../Apollo/client";
 import ErrorMessage from "../components/commons/ErrorMessage";
 import ThemeChange from "../components/commons/ThemeChange";
+import { LOGIN } from "../Apollo/mutations";
 
 const FacebookLogin = styled.div`
   width: 100%;
@@ -36,18 +37,7 @@ const FacebookLogin = styled.div`
   }
 `;
 
-const LOGIN = gql`
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
-      message
-      result
-    }
-  }
-`;
-
 function Login() {
-  const { state } = useLocation();
   const {
     register,
     handleSubmit,
