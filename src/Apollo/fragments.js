@@ -6,3 +6,12 @@ export const viewPhotoFragment = gql`
     isLike
   }
 `;
+
+export const createComment = gql`
+  fragment createComment on Comment {
+    id
+    text
+    userId
+    photoId
+  }
+`;

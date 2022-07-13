@@ -2,7 +2,10 @@ import { useMutation } from "@apollo/client";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { ApolloClientConnector } from "../Apollo/client";
+import { createComment } from "../Apollo/fragments";
 import { CREATE_COMMENT } from "../Apollo/mutations";
+import useToken from "../hooks/useToken";
 import Comment from "./Comment";
 
 const CommentsContainer = styled.div`
@@ -11,7 +14,9 @@ const CommentsContainer = styled.div`
   margin: 5px 0px;
 `;
 
-const CommentViewRow = styled.div``;
+const CommentViewRow = styled.div`
+  margin-bottom: 5px;
+`;
 const CommentInputRow = styled.div`
   border-top: 1px solid ${(props) => props.theme.borderColor};
   display: flex;
@@ -24,14 +29,47 @@ const CommentInputRow = styled.div`
 `;
 
 function Comments({ feedID, comments }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [createCommentFN] = useMutation(CREATE_COMMENT);
+  const loginUser = useToken();
   const onCommnetSubmit = (data) => {
     if (!data?.comment && data.comment === "") return;
+    const text = data?.comment;
     createCommentFN({
       variables: {
         photoId: feedID,
-        text: data?.comment,
+        text,
+      },
+      update: (cache, data) => {
+        const {
+          data: {
+            createComment: { result, message: id },
+          },
+        } = data;
+
+        if (result) {
+          ApolloClientConnector.writeFragment({
+            __typename: "Comment",
+            id: `Comment:${id}`,
+            fragment: createComment,
+            data: {
+              id,
+              text,
+              userId: loginUser.id,
+              photoId: feedID,
+            },
+          });
+          cache.modify({
+            id: `Photo:${feedID}`,
+            fields: {
+              comments(prev) {
+                return [{ __ref: `Comment:${id}` }, ...prev];
+              },
+            },
+          });
+
+          setValue("comment", "");
+        }
       },
     });
   };

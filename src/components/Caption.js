@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { DefaultLabel, UsernameLabel } from "./commons/Labels";
+import { DefaultLabel, HashTagsLabel, UsernameLabel } from "./commons/Labels";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const FooterRow = styled.div`
   display: flex;
@@ -15,13 +16,26 @@ const CaptionRow = styled(FooterRow)`
   gap: 5px;
 `;
 
-const REGEXR = /(#[\w]+)|([\w]+)/g;
+const REGEXR =
+  /(#[\w]+[!@$%^&*()_+{}[\];':",.<>/?`~\\|]*)|([\w]+[!@$%^&*()_+{}[\];':",.<>/?`~\\|]*)/g;
 
 function Caption({ url, name, caption }) {
   return (
     <CaptionRow>
       <UsernameLabel>{name}</UsernameLabel>
-      <DefaultLabel>{caption}</DefaultLabel>
+      {caption
+        .split(REGEXR)
+        .filter((t) => t?.trim() && true)
+        .map((t, index) => {
+          return t?.startsWith("#") ? (
+            <Link to={`/hashtags/${t}`} key={index}>
+              {" "}
+              <HashTagsLabel>{t}</HashTagsLabel>{" "}
+            </Link>
+          ) : (
+            <DefaultLabel key={index}>{t}</DefaultLabel>
+          );
+        })}
     </CaptionRow>
   );
 }

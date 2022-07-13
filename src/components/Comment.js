@@ -5,13 +5,19 @@ import Avatar from "./commons/Avatar";
 import { DefaultLabel, UsernameLabel } from "./commons/Labels";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import useToken from "../hooks/useToken";
+import { DELETE_COMMENT } from "../Apollo/mutations";
+import { useMutation } from "@apollo/client";
 
 const CommentRow = styled.div`
   display: flex;
   align-items: center;
   padding: 0 15px;
-  gap: 5px;
   margin-bottom: 5px;
+  div {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const DelContainer = styled.div`
@@ -28,17 +34,38 @@ const DelButton = styled.button`
 `;
 
 function Comment({ id, text, userId, photoId, user }) {
+  const [deleteCommentFN] = useMutation(DELETE_COMMENT);
   const onDeleteComment = (e) => {
-    console.log("Delete", id);
+    deleteCommentFN({
+      variables: {
+        deleteCommentId: id,
+      },
+      update: (cache, data) => {
+        const {
+          data: {
+            deleteComment: { result, error },
+          },
+        } = data;
+        if (result) {
+          cache.evict({
+            id: `Comment:${id}`,
+          });
+        } else {
+          console.log(error);
+        }
+      },
+    });
   };
   const {
     getTokenUser: { id: loginID },
   } = useToken();
   return (
     <CommentRow>
-      <Avatar url={user.avator} scale={0.8} />
-      <UsernameLabel>{user.username}</UsernameLabel>
-      <DefaultLabel>{text}</DefaultLabel>
+      <div>
+        <Avatar url={user.avator} scale={0.8} />
+        <UsernameLabel>{user.username}</UsernameLabel>
+        <DefaultLabel>{text}</DefaultLabel>
+      </div>
       <DelContainer>
         {loginID === userId ? (
           <DelButton onClick={onDeleteComment}>

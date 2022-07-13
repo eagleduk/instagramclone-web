@@ -104,7 +104,7 @@ function Feed({
       variables: {
         id,
       },
-      onCompleted: (data) => {
+      update: (cache, data) => {
         ApolloClientConnector.writeFragment({
           ...fragmentVar,
           data: {
@@ -115,7 +115,6 @@ function Feed({
       },
     });
   };
-
   return (
     <FeedContainer>
       <FeedHeader>
