@@ -7,6 +7,7 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import useToken from "../hooks/useToken";
 import { DELETE_COMMENT } from "../Apollo/mutations";
 import { useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 const CommentRow = styled.div`
   display: flex;
@@ -62,8 +63,12 @@ function Comment({ id, text, userId, photoId, user }) {
   return (
     <CommentRow>
       <div>
-        <Avatar url={user.avator} scale={0.8} />
-        <UsernameLabel>{user.username}</UsernameLabel>
+        <Link to={`/users/${user.username}`}>
+          <Avatar url={user.avator} scale={0.8} />
+        </Link>
+        <Link to={`/users/${user.username}`}>
+          <UsernameLabel>{user.username}</UsernameLabel>
+        </Link>
         <DefaultLabel>{text}</DefaultLabel>
       </div>
       <DelContainer>

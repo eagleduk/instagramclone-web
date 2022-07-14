@@ -16,6 +16,7 @@ import Caption from "./Caption";
 import Comments from "./Comments";
 import { TOGGLE_LIKE } from "../Apollo/mutations";
 import { viewPhotoFragment } from "../Apollo/fragments";
+import { Link } from "react-router-dom";
 
 const FeedContainer = styled.div`
   max-width: 470px;
@@ -118,8 +119,12 @@ function Feed({
   return (
     <FeedContainer>
       <FeedHeader>
-        <Avatar url={user.avator} scale={1.3} />
-        <UsernameLabel>{user.username}</UsernameLabel>
+        <Link to={`/users/${user.username}`}>
+          <Avatar url={user.avator} scale={1.3} />
+        </Link>
+        <Link to={`/users/${user.username}`}>
+          <UsernameLabel>{user.username}</UsernameLabel>
+        </Link>
       </FeedHeader>
       <FeedContent>
         <img src={file} alt={caption} />

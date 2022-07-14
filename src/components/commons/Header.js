@@ -60,8 +60,12 @@ function Header() {
         <StyledHeaderColumn>
           {tokenUser?.getTokenUser ? (
             <>
-              <FontAwesomeIcon icon={faHouse} size="lg" />
-              <Avatar url={tokenUser?.getTokenUser?.avator} />
+              <Link to={routes.home}>
+                <FontAwesomeIcon icon={faHouse} size="lg" />
+              </Link>
+              <Link to={`/users/${tokenUser?.getTokenUser?.username}`}>
+                <Avatar url={tokenUser?.getTokenUser?.avator} />
+              </Link>
               <button onClick={() => LogoutUser()}>로그아웃</button>
             </>
           ) : (

@@ -13,6 +13,7 @@ import {
 } from "./Apollo/client";
 import Login from "./screens/Login";
 import Layout from "./components/Layout";
+import Profile from "./components/Profile";
 
 function App() {
   const isLogin = useReactiveVar(isLoginVar);
@@ -39,6 +40,16 @@ function App() {
                 />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="login" element={<Login />} />
+                <Route path="users">
+                  <Route
+                    path=":username"
+                    element={
+                      <Layout>
+                        <Profile />
+                      </Layout>
+                    }
+                  />
+                </Route>
               </Route>
               <Route path="*" element={<E404 />} />
             </Routes>

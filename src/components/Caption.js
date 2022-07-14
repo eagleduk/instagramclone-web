@@ -22,7 +22,9 @@ const REGEXR =
 function Caption({ url, name, caption }) {
   return (
     <CaptionRow>
-      <UsernameLabel>{name}</UsernameLabel>
+      <Link to={`/users/${name}`}>
+        <UsernameLabel>{name}</UsernameLabel>
+      </Link>
       {caption
         .split(REGEXR)
         .filter((t) => t?.trim() && true)

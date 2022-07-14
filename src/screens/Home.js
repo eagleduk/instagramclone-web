@@ -6,6 +6,7 @@ import Feed from "../components/Feed";
 
 const Main = styled.main`
   background-color: ${(props) => props.theme.backgroundColor};
+  overflow-y: scroll;
 `;
 
 function Home() {
