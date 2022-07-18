@@ -42,3 +42,27 @@ export const TOKENUSER = gql`
     }
   }
 `;
+
+export const GETUSER = gql`
+  query GetUserProfile($username: String!) {
+    getUserProfile(username: $username) {
+      id
+      followerCount
+      followingCount
+      isOwner
+      bio
+      avator
+      username
+      isFollowing
+      isFollower
+      photo {
+        id
+        file
+        comments {
+          id
+        }
+        like
+      }
+    }
+  }
+`;

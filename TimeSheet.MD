@@ -1,3 +1,13 @@
+=============================   2022-07-18  ==============================
+
+1. User Profile
+   1. Profile Component Update
+   2. following / unfollowing Update
+
+2. ToDo
+   1. User Profile Layout
+   2. Home like / unlike bug
+
 =============================   2022-07-13  ==============================
 
 1. Link 연결

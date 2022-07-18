@@ -53,3 +53,21 @@ export const DELETE_COMMENT = gql`
     }
   }
 `;
+
+export const UNFOLLOWUSER = gql`
+  mutation unFollowingUser($username: String!) {
+    unFollowingUser(username: $username) {
+      result
+      message
+    }
+  }
+`;
+
+export const FOLLOWUSER = gql`
+  mutation followingUser($username: String!) {
+    followingUser(username: $username) {
+      result
+      message
+    }
+  }
+`;
