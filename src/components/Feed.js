@@ -10,13 +10,13 @@ import {
 import { faHeart as faHeartLike } from "@fortawesome/free-solid-svg-icons";
 import { AccentLabel, UsernameLabel } from "../components/commons/Labels";
 import PropTypes from "prop-types";
-import { ApolloClientConnector } from "../Apollo/client";
 import { useMutation } from "@apollo/client";
 import Caption from "./Caption";
 import Comments from "./Comments";
 import { TOGGLE_LIKE } from "../Apollo/mutations";
-import { viewPhotoFragment } from "../Apollo/fragments";
 import { Link } from "react-router-dom";
+// import { ApolloClientConnector } from "../Apollo/client";
+// import { viewPhotoFragment } from "../Apollo/fragments";
 
 const FeedContainer = styled.div`
   max-width: 470px;
@@ -91,6 +91,7 @@ function Feed({
   like,
   isLike,
 }) {
+  /*
   const fragmentVar = {
     id: `Photo:${id}`,
     fragment: viewPhotoFragment,
@@ -98,7 +99,7 @@ function Feed({
 
   const { like: cacheLike, isLike: cacheIsLike } =
     ApolloClientConnector.readFragment(fragmentVar);
-
+  */
   const [TOGGLE_LIKE_FN] = useMutation(TOGGLE_LIKE);
   const onToggleLike = (e) => {
     TOGGLE_LIKE_FN({
@@ -106,13 +107,26 @@ function Feed({
         id,
       },
       update: (cache, data) => {
+        cache.modify({
+          id: `Photo:${id}`,
+          fields: {
+            like(prev) {
+              return like ? prev - 1 : prev + 1;
+            },
+            isLike(prev) {
+              return !prev;
+            },
+          },
+        });
+        /*
         ApolloClientConnector.writeFragment({
           ...fragmentVar,
           data: {
-            isLike: !cacheLike,
-            like: cacheLike ? cacheIsLike - 1 : cacheIsLike + 1,
+            isLike: !cacheIsLike,
+            like: cacheIsLike ? cacheLike - 1 : cacheLike + 1,
           },
         });
+        */
       },
     });
   };

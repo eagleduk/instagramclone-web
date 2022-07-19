@@ -1,5 +1,10 @@
 =============================   2022-07-18  ==============================
 
+1. Bug fix.
+   1. Feed like / unlik bug fix.
+
+=============================   2022-07-18  ==============================
+
 1. User Profile
    1. Profile Component Update
    2. following / unfollowing Update
