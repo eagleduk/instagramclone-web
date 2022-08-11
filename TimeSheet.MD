@@ -1,3 +1,19 @@
+=============================   2022-08-11  ==============================
+#### Deploy
+1. Netlify signup for github
+2. select repository
+3. production mode
+    - node 에서는 env 에 기본적으로 "development", "production" 의 mode 에 대한 값이 입력되어 있다.
+    - process.env.NODE_ENV 을 이용하여 deploy 시에는 자동으로 production mode 로 활성화 되어 있다.
+    - 해당 값을 이용하여 graphql 의 주소를 변경할 수 있다.
+4. _redirects
+    - Netlify 에 deploy 이후 refresh 버그 발생
+    - public 폴더에 `_redirects` 생성 이후 주소에 파일을 맵핑 해준다.
+
+    ```
+        /   /index.html 200
+    ```
+
 =============================   2022-07-18  ==============================
 
 1. Bug fix.
